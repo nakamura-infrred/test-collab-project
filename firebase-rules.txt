@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "counter": {
+      ".read": true,
+      ".write": "newData.isNumber() && newData.val() >= data.val() && (data.child('lastUpdate').val() === null || now > data.child('lastUpdate').val() + 5000)"
+    },
+    "lastUpdate": {
+      ".validate": "newData.isNumber() && newData.val() <= now"
+    }
+  }
+}
