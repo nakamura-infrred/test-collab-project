@@ -16,7 +16,7 @@
     };
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+    const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.database(app);
     let count = 0;
     addCount();
