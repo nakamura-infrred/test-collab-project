@@ -1,1 +1,41 @@
 <h1>hello</h1>
+<div id="counter">
+    <img src="7seg/0"><img src="7seg/0"><img src="7seg/0"><img src="7seg/0"><img src="7seg/0"><img src="7seg/0">
+</div>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+<script>
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAhm9TVoe8_HEug1Pj9m3mRvlRPPpNox1g",
+        authDomain: "test-collab-project-fbaaa.firebaseapp.com",
+        projectId: "test-collab-project-fbaaa",
+        storageBucket: "test-collab-project-fbaaa.firebasestorage.app",
+        messagingSenderId: "765337705557",
+        appId: "1:765337705557:web:61caeec4b8af4b421548dc"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+    let count = 0;
+    
+    // クリックをバッファリングしてサーバーに送信
+    function addCount() {
+        const counterRef = firebase.database().ref('counter');
+        counterRef.transaction((currentValue) => {
+            return (currentValue || 0) + 1;
+        }).then((result) => {
+            count = result.snapshot.val(); // サーバーから更新後のカウントを取得
+            updateDisplay();
+        }).catch((error) => {
+            console.error("送信エラー:", error);
+        });
+    }
+    function updateDisplay(){
+        const counterDiv=document.getElementById("counter");
+        for(let i=0;i<6;i++){
+            counterDiv.children[i].src=`7seg/${String(count+1000000)[i+1]}.png`
+        }
+    }
+</script>
