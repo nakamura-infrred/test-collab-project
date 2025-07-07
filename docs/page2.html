@@ -1,11 +1,12 @@
 <h1>hello</h1>
-<div id="counter">
+<div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->>
     <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png">
 </div>
+<!--firebase SDKを持ってくる-->
 <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 <script>
-
+    //firebaseの設定とか。ちょっとよく分からない所もある。
     const firebaseConfig = {
         apiKey: "AIzaSyAhm9TVoe8_HEug1Pj9m3mRvlRPPpNox1g",
         authDomain: "test-collab-project-fbaaa.firebaseapp.com",
@@ -14,28 +15,39 @@
         messagingSenderId: "765337705557",
         appId: "1:765337705557:web:61caeec4b8af4b421548dc"
     };
-
+    // firebaseを初期化しデータベースを読み込む
     // Initialize Firebase
     const app = firebase.initializeApp(firebaseConfig);
     const db = firebase.database(app);
+    //カウンタを0で宣言
     let count = 0;
+    //カウンタを1加算
     addCount();
-    // クリックをバッファリングしてサーバーに送信
+    //カウンタ加算用関数
     function addCount() {
+        //カウンタの参照
         const counterRef = firebase.database().ref('counter');
+        //値の更新(transactionを利用する事で同時更新時のずれを防止)
         counterRef.transaction((currentValue) => {
+            //今の値+1
             return (currentValue || 0) + 1;
         }).then((result) => {
+            //成功したらカウンタを更新する
             count = result.snapshot.val(); // サーバーから更新後のカウントを取得
             updateDisplay();
         }).catch((error) => {
+            //エラーを記録する
             console.error("送信エラー:", error);
         });
     }
+    //カウンタ要素の更新
     function updateDisplay(){
+        //カウンタ要素を取得
         const counterDiv=document.getElementById("counter");
+        //全体にループ処理をして値を更新
         for(let i=0;i<6;i++){
-            counterDiv.children[i].src=`7seg/${String(count+1000000)[i+1]}.png`
+            //値を設定
+            counterDiv.children[i].src=`7seg/${String(count).at(i-6)}.png`
         }
     }
 </script>
