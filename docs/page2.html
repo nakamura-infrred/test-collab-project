@@ -1,5 +1,5 @@
 <h1>hello</h1>
-<div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->>
+<div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->
     <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png">
 </div>
 <!--firebase SDKを持ってくる-->
@@ -47,7 +47,7 @@
         //全体にループ処理をして値を更新
         for(let i=0;i<6;i++){
             //値を設定
-            counterDiv.children[i].src=`7seg/${String(count).at(i-6)}.png`
+            counterDiv.children[i].src=`7seg/${String(count).at(i-6)=="0"}.png`
         }
     }
 </script>
