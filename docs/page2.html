@@ -236,6 +236,7 @@
     <div class="main">
         <h1>Hello, Firebase</h1>
         ここはテスト用のページです。
+        <div id="comment-in"></div>
         <div id="comments">
             <img src="image/comment_load.gif" alt="Loading...">
             <span>読み込み中…</span>
@@ -313,7 +314,7 @@
             });
             const template = document.getElementById("commentinput-template");
             const clone = template.content.cloneNode(true);
-            commentsDiv.prepend(clone);
+            document.getElementById("comment-in").prepend(clone);
             document.getElementById("submit-comment").addEventListener("click", async () => {
                 const content = document.getElementById("comment-input").value.trim();
 
