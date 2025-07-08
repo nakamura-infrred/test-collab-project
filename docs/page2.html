@@ -178,7 +178,7 @@
             </label>
 
             <div class="signin-buttons">
-                <button id="signin-submit">サインイン</button>
+                <button id="signin-submit" onclick="signin()">サインイン</button>
                 <button id="signin-anonymous" onclick="tokumeiSignup()">今は匿名で続ける</button>
             </div>
         </div>
@@ -431,5 +431,23 @@
                 });
         }
     }
+    function signin() {
+  const email = document.getElementById("signin-email").value.trim();
+  const password = document.getElementById("signin-password").value.trim();
+
+  if (email && password) {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(result => {
+        console.log("サインイン成功", result.user.uid);
+        alert("サインインできました");
+        // 必要なら UI 更新や投稿欄の復元など
+      })
+      .catch(err => {
+        console.error("サインイン失敗", err);
+        alert("サインインに失敗しました：" + err.message);
+      });
+  }
+}
+
 
 </script>
