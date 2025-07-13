@@ -148,7 +148,13 @@
     }
 </style>
 
-<!-- テンプレート（非表示） -->
+<!-- 
+--テンプレート
+--
+--サイト内で使うHTML要素の素材。複製して使う。
+--
+--コメントテンプレート,コメント一つ一つを表示する。
+-->
 <template id="comment-template">
     <div class="comment">
         <div class="comment-header">
@@ -158,11 +164,18 @@
         <div class="comment-body"></div>
     </div>
 </template>
+
+<!--
+--コメント入力のテンプレート,一つしか置かない。
+--なぜテンプレートにしたのかが分からない。ただかなりのサイズ。分けたい。
+-->
 <template id="commentinput-template">
     <div id="comment-form">
+        <!--入力欄本体-->
         <textarea id="comment-input" placeholder="コメントする..."></textarea>
         <button id="submit-comment">投稿</button>
 
+        <!--サインインしてないとき用メッセージ-->
         <div style="display: none;" id="signin-form" class="signin-dialog">
             <h3>ちょっと待って！</h3>
             サインインをしていないようです。
@@ -182,6 +195,8 @@
                 <button id="signin-anonymous" onclick="tokumeiSignup()">今は匿名で続ける</button>
             </div>
         </div>
+
+        <!--匿名サインイン時用メッセージ-->
         <div style="display: none;" id="upgrade-prompt" class="soft-prompt" style="display: none;">
             <p>こんにちは、名無しさん。<br>
                 このまま匿名でも使えますが、<br>
@@ -192,6 +207,8 @@
                 onclick="document.getElementById('upgrade-form').style.display = 'block';">名前を残す</button>
             <button id="dismiss-upgrade"
                 onclick="document.getElementById('upgrade-prompt').style.display = 'none';">このままで続ける</button>
+
+            <!--匿名アップグレード用メッセージ-->
             <div style="display: none;" id="upgrade-form">
                 <p class="note"></p>アップグレード用メニュー</p>
                 <label>
@@ -222,14 +239,18 @@
     <div class="sidebar left">
         <div class="center-div">
             <div>あなたは</div>
-            <div class="counter-frame">
-                <div class="counter-inner">
-                    <div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->
-                        <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img
-                            src="7seg/0.png"><img src="7seg/0.png">
-                    </div>
-                </div>
+
+
+    <div class="counter-frame">
+        <div class="counter-inner">
+            <div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->
+                <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img
+                    src="7seg/0.png"><img src="7seg/0.png">
             </div>
+        </div>
+    </div>
+
+
             <div>人目の訪問者です</div>
         </div>
     </div>
