@@ -1,475 +1,489 @@
-<style>
-    body {
-        background-image: url("image/BG.webp");
-        background-repeat: repeat;
-        background-position: top left;
-        background-attachment: fixed;
-        background-size: auto;
-        margin: 0px;
-    }
+<!doctype html>
+<html lang="ja-JP">
 
-    .layout {
-        display: flex;
-    }
+<head>
+    <meta name="description" content="このページはテスト用です。深い意味はありません。練習なので、それっぽいことが出来るという事を把握する意味だけあれば良い物です。">
+    <meta charset="utf-8" />
+    <title>My test page</title>
+    <style>
+        body {
+            background-image: url("image/BG.webp");
+            background-repeat: repeat;
+            background-position: top left;
+            background-attachment: fixed;
+            background-size: auto;
+            margin: 0px;
+        }
 
-    .sidebar {
-        width: 220px;
-        padding: 1rem;
-        background: rgba(255, 255, 255, 0.5);
-        /* 和紙に重ねるような透け感 */
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        font-family: "Noto Serif JP", serif;
-        font-size: 14px;
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-    }
+        .layout {
+            display: flex;
+        }
 
-    .sidebar.left {
-        border-left: none;
-    }
+        .sidebar {
+            width: 220px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            /* 和紙に重ねるような透け感 */
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            font-family: "Noto Serif JP", serif;
+            font-size: 14px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+        }
 
-    .sidebar.right {
-        border-right: none;
-    }
+        .sidebar.left {
+            border-left: none;
+        }
 
-    .main {
-        flex: 1;
-        min-width: 0;
-        padding: 2rem;
-        overflow-y: auto;
-        font-size: 16px;
-        font-family: "Kosugi Maru", sans-serif;
-    }
+        .sidebar.right {
+            border-right: none;
+        }
 
-    .counter-frame {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        border: 4px solid #ccc;
-        /* 外枠：薄い灰色 */
-        box-sizing: border-box;
-        display: inline-block
-    }
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 2rem;
+            overflow-y: auto;
+            font-size: 16px;
+            font-family: "Kosugi Maru", sans-serif;
+        }
 
-    .counter-inner {
-        display: inline-block;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 2px solid #555;
-        /* 内枠：濃い灰色 */
-        font-family: 'Courier New', monospace;
-        font-size: 1.8rem;
-        background-color: #fafafa;
-    }
+        .counter-frame {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            border: 4px solid #ccc;
+            /* 外枠：薄い灰色 */
+            box-sizing: border-box;
+            display: inline-block
+        }
 
-    .center-div {
-        flex-direction: column;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        .counter-inner {
+            display: inline-block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #555;
+            /* 内枠：濃い灰色 */
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
+            background-color: #fafafa;
+        }
 
-    /* コメント全体のスタイル */
-    .comment {
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-        padding: 0.75em 1em;
-        /*margin: 1em 0;*/
-        background-color: #fafafa67;
-        font-family: 'Noto Sans JP', sans-serif;
-    }
+        .center-div {
+            flex-direction: column;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    /* ヘッダー：少し小さめ、濃いめの灰色 */
-    .comment-header {
-        font-size: 0.85em;
-        color: #444;
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5em;
-    }
+        /* コメント全体のスタイル */
+        .comment {
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 0.75em 1em;
+            /*margin: 1em 0;*/
+            background-color: #fafafa67;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
 
-    /* 本文：左にインデント */
-    .comment-body {
-        padding-left: 1em;
-        white-space: pre-line;
-        /* 改行詩対応 */
-        color: #222;
-        line-height: 1.6;
-    }
+        /* ヘッダー：少し小さめ、濃いめの灰色 */
+        .comment-header {
+            font-size: 0.85em;
+            color: #444;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5em;
+        }
 
-    #comment-form {
-        /*margin-top: 2em;*/
-        padding: 1em;
-        border-top: 1px solid #ccc;
-        background-color: #fafafa67;
-    }
+        /* 本文：左にインデント */
+        .comment-body {
+            padding-left: 1em;
+            white-space: pre-line;
+            /* 改行詩対応 */
+            color: #222;
+            line-height: 1.6;
+        }
 
-    #comment-input {
-        width: 100%;
-        height: 6em;
-        padding: 0.75em;
-        font-family: 'Noto Sans JP', sans-serif;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        resize: vertical;
-        box-sizing: border-box;
-        margin-bottom: 0.5em;
-    }
+        #comment-form {
+            /*margin-top: 2em;*/
+            padding: 1em;
+            border-top: 1px solid #ccc;
+            background-color: #fafafa67;
+        }
 
-    #submit-comment {
-        padding: 0.5em 1.5em;
-        font-size: 1em;
-        background-color: #949494;
-        color: white;
-        border: none;
-        border-radius: 3px;
-        cursor: pointer;
-    }
+        #comment-input {
+            width: 100%;
+            height: 6em;
+            padding: 0.75em;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 0.5em;
+        }
 
-    #submit-comment:hover {
-        background-color: #616161;
-    }
+        #submit-comment {
+            padding: 0.5em 1.5em;
+            font-size: 1em;
+            background-color: #949494;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
 
-    .soft-prompt {
-        border: 1px solid #e2cc77;
-        padding: 1em;
-        margin-top: 1.5em;
-        border-radius: 6px;
-        font-size: 0.95em;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
-    }
+        #submit-comment:hover {
+            background-color: #616161;
+        }
 
-    .soft-prompt p.note {
-        font-size: 0.85em;
-        color: #555;
-    }
-</style>
+        .soft-prompt {
+            border: 1px solid #e2cc77;
+            padding: 1em;
+            margin-top: 1.5em;
+            border-radius: 6px;
+            font-size: 0.95em;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+        }
 
-<!-- 
+        .soft-prompt p.note {
+            font-size: 0.85em;
+            color: #555;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 
 --テンプレート
 --
 --サイト内で使うHTML要素の素材。複製して使う。
 --
 --コメントテンプレート,コメント一つ一つを表示する。
 -->
-<template id="comment-template">
-    <div class="comment">
-        <div class="comment-header">
-            <span class="comment-user"></span>
-            <span class="comment-time"></span>
+    <template id="comment-template">
+        <div class="comment">
+            <div class="comment-header">
+                <span class="comment-user"></span>
+                <span class="comment-time"></span>
+            </div>
+            <div class="comment-body"></div>
         </div>
-        <div class="comment-body"></div>
-    </div>
-</template>
+    </template>
 
-<!--
+    <!--
 --コメント入力のテンプレート,一つしか置かない。
 --なぜテンプレートにしたのかが分からない。ただかなりのサイズ。分けたい。
 -->
-<template id="commentinput-template">
-    <div id="comment-form">
-        <!--入力欄本体-->
-        <textarea id="comment-input" placeholder="コメントする..."></textarea>
-        <button id="submit-comment">投稿</button>
+    <template id="commentinput-template">
+        <div id="comment-form">
+            <!--入力欄本体-->
+            <textarea id="comment-input" placeholder="コメントする..."></textarea>
+            <button id="submit-comment">投稿</button>
 
-        <!--サインインしてないとき用メッセージ-->
-        <div style="display: none;" id="signin-form" class="signin-dialog">
-            <h3>ちょっと待って！</h3>
-            サインインをしていないようです。
-            <br>
-            <label>
-                メールアドレス:
-                <input type="email" id="signin-email" required />
-            </label>
-            <br>
-            <label>
-                パスワード:
-                <input type="password" id="signin-password" required />
-            </label>
-
-            <div class="signin-buttons">
-                <button id="signin-submit" onclick="signin()">サインイン</button>
-                <button id="signin-anonymous" onclick="tokumeiSignup()">今は匿名で続ける</button>
-            </div>
-        </div>
-
-        <!--匿名サインイン時用メッセージ-->
-        <div style="display: none;" id="upgrade-prompt" class="soft-prompt" style="display: none;">
-            <p>こんにちは、名無しさん。<br>
-                このまま匿名でも使えますが、<br>
-                よければ名前を残しておきませんか？</p>
-            <p class="note">また来たときに、自分の記録を見つけやすくなります。<br>
-                ※ 匿名アカウントは 30日以上アクセスがないと削除されます</p>
-            <button id="upgrade-signin"
-                onclick="document.getElementById('upgrade-form').style.display = 'block';">名前を残す</button>
-            <button id="dismiss-upgrade"
-                onclick="document.getElementById('upgrade-prompt').style.display = 'none';">このままで続ける</button>
-
-            <!--匿名アップグレード用メッセージ-->
-            <div style="display: none;" id="upgrade-form">
-                <p class="note"></p>アップグレード用メニュー</p>
+            <!--サインインしてないとき用メッセージ-->
+            <div style="display: none;" id="signin-form" class="signin-dialog">
+                <h3>ちょっと待って！</h3>
+                サインインをしていないようです。
+                <br>
                 <label>
                     メールアドレス:
-                    <input type="email" id="upgrade-email" required />
+                    <input type="email" id="signin-email" required />
                 </label>
                 <br>
                 <label>
                     パスワード:
-                    <input type="password" id="upgrade-password" required />
-                </label>
-                <br>
-                <label>
-                    ニックネーム:
-                    <input type="text" id="upgrade-nickname" required />
+                    <input type="password" id="signin-password" required />
                 </label>
 
-                <div class="upgrade-buttons">
-                    <button id="upgrade-submit" onclick="upgrade()">アップグレード</button>
+                <div class="signin-buttons">
+                    <button id="signin-submit" onclick="signin()">サインイン</button>
+                    <button id="signin-anonymous" onclick="tokumeiSignup()">今は匿名で続ける</button>
+                </div>
+            </div>
+
+            <!--匿名サインイン時用メッセージ-->
+            <div style="display: none;" id="upgrade-prompt" class="soft-prompt" style="display: none;">
+                <p>こんにちは、名無しさん。<br>
+                    このまま匿名でも使えますが、<br>
+                    よければ名前を残しておきませんか？</p>
+                <p class="note">また来たときに、自分の記録を見つけやすくなります。<br>
+                    ※ 匿名アカウントは 30日以上アクセスがないと削除されます</p>
+                <button id="upgrade-signin"
+                    onclick="document.getElementById('upgrade-form').style.display = 'block';">名前を残す</button>
+                <button id="dismiss-upgrade"
+                    onclick="document.getElementById('upgrade-prompt').style.display = 'none';">このままで続ける</button>
+
+                <!--匿名アップグレード用メッセージ-->
+                <div style="display: none;" id="upgrade-form">
+                    <p class="note"></p>アップグレード用メニュー</p>
+                    <label>
+                        メールアドレス:
+                        <input type="email" id="upgrade-email" required />
+                    </label>
+                    <br>
+                    <label>
+                        パスワード:
+                        <input type="password" id="upgrade-password" required />
+                    </label>
+                    <br>
+                    <label>
+                        ニックネーム:
+                        <input type="text" id="upgrade-nickname" required />
+                    </label>
+
+                    <div class="upgrade-buttons">
+                        <button id="upgrade-submit" onclick="upgrade()">アップグレード</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</template>
+    </template>
 
 
-<div class="layout">
-    <div class="sidebar left">
-        <div class="center-div">
-            <div>あなたは</div>
+    <div class="layout">
+        <div class="sidebar left">
+            <div class="center-div">
+                <div>あなたは</div>
 
 
-    <div class="counter-frame">
-        <div class="counter-inner">
-            <div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->
-                <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img
-                    src="7seg/0.png"><img src="7seg/0.png">
+                <div class="counter-frame">
+                    <div class="counter-inner">
+                        <div id="counter"><!--カウンター用要素。6桁、7セグメント画像-->
+                            <img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img src="7seg/0.png"><img
+                                src="7seg/0.png"><img src="7seg/0.png">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>人目の訪問者です</div>
             </div>
         </div>
-    </div>
-
-
-            <div>人目の訪問者です</div>
+        <div class="main">
+            <h1>Hello, Firebase</h1>
+            ここはテスト用のページです。<br>コミットメッセージは日本語で良いのか？
+            <div id="comment-in"></div>
+            <div id="comments">
+                <img src="image/comment_load.gif" alt="Loading...">
+                <span>読み込み中…</span>
+            </div>
         </div>
+        <div class="sidebar right"></div>
     </div>
-    <div class="main">
-        <h1>Hello, Firebase</h1>
-        ここはテスト用のページです。<br>コミットメッセージは日本語で良いのか？
-        <div id="comment-in"></div>
-        <div id="comments">
-            <img src="image/comment_load.gif" alt="Loading...">
-            <span>読み込み中…</span>
-        </div>
-    </div>
-    <div class="sidebar right"></div>
-</div>
-<!--firebase SDKを持ってくる-->
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+    <!--firebase SDKを持ってくる-->
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
 
-<script>
-    //firebaseの設定とか。ちょっとよく分からない所もある。
-    const firebaseConfig = {
-        apiKey: "AIzaSyAhm9TVoe8_HEug1Pj9m3mRvlRPPpNox1g",
-        authDomain: "test-collab-project-fbaaa.firebaseapp.com",
-        projectId: "test-collab-project-fbaaa",
-        storageBucket: "test-collab-project-fbaaa.firebasestorage.app",
-        messagingSenderId: "765337705557",
-        appId: "1:765337705557:web:61caeec4b8af4b421548dc"
-    };
-    // firebaseを初期化しデータベースを読み込む
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.database(app);
-    const auth = firebase.auth();
-    //カウンタを0で宣言
-    let count = 0;
-    //カウンタを1加算
-    addCount();
-    //カウンタ加算用関数
-    function addCount() {
-        //カウンタの参照
-        const counterRef = firebase.database().ref('counter');
-        //値の更新(transactionを利用する事で同時更新時のずれを防止)
-        counterRef.transaction((currentValue) => {
-            //今の値+1
-            return (currentValue || 0) + 1;
-        }).then((result) => {
-            //成功したらカウンタを更新する
-            count = result.snapshot.val(); // サーバーから更新後のカウントを取得
-            updateDisplay();
-        }).catch((error) => {
-            //エラーを記録する
-            console.error("送信エラー:", error);
-        });
-    }
-    //カウンタ要素の更新
-    function updateDisplay() {
-        //カウンタ要素を取得
-        const counterDiv = document.getElementById("counter");
-        //全体にループ処理をして値を更新
-        for (let i = 0; i < 6; i++) {
-            //値を設定
-            counterDiv.children[i].src = `7seg/${String(count).at(i - 6) || "0"}.png`
-        }
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-        loadComments();
-    })
-    const userCache = new Map(); // uid → ユーザーデータ or Pending Promise
-
-    //コメントの取得
-    function loadComments() {
-        const commentsDiv = document.getElementById("comments");
-        const commentsRef = firebase.database().ref('comments');
-        commentsRef.get().then(commentsSnapshot => {
-            comments = commentsSnapshot.val() || [];
-            commentsDiv.innerHTML = "";
-            Object.values(comments).forEach(e => {
-                console.log(e);
-                addComment(e);
+    <script>
+        //firebaseの設定とか。ちょっとよく分からない所もある。
+        const firebaseConfig = {
+            apiKey: "AIzaSyAhm9TVoe8_HEug1Pj9m3mRvlRPPpNox1g",
+            authDomain: "test-collab-project-fbaaa.firebaseapp.com",
+            projectId: "test-collab-project-fbaaa",
+            storageBucket: "test-collab-project-fbaaa.firebasestorage.app",
+            messagingSenderId: "765337705557",
+            appId: "1:765337705557:web:61caeec4b8af4b421548dc"
+        };
+        // firebaseを初期化しデータベースを読み込む
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database(app);
+        const auth = firebase.auth();
+        //カウンタを0で宣言
+        let count = 0;
+        //カウンタを1加算
+        addCount();
+        //カウンタ加算用関数
+        function addCount() {
+            //カウンタの参照
+            const counterRef = firebase.database().ref('counter');
+            //値の更新(transactionを利用する事で同時更新時のずれを防止)
+            counterRef.transaction((currentValue) => {
+                //今の値+1
+                return (currentValue || 0) + 1;
+            }).then((result) => {
+                //成功したらカウンタを更新する
+                count = result.snapshot.val(); // サーバーから更新後のカウントを取得
+                updateDisplay();
+            }).catch((error) => {
+                //エラーを記録する
+                console.error("送信エラー:", error);
             });
-            const template = document.getElementById("commentinput-template");
-            const clone = template.content.cloneNode(true);
-            document.getElementById("comment-in").prepend(clone);
-            document.getElementById("submit-comment").addEventListener("click", async () => {
-                const content = document.getElementById("comment-input").value.trim();
+        }
+        //カウンタ要素の更新
+        function updateDisplay() {
+            //カウンタ要素を取得
+            const counterDiv = document.getElementById("counter");
+            //全体にループ処理をして値を更新
+            for (let i = 0; i < 6; i++) {
+                //値を設定
+                counterDiv.children[i].src = `7seg/${String(count).at(i - 6) || "0"}.png`
+            }
+        }
 
-                if (!content) {
-                    alert("コメントが空です！");
-                    return;
-                }
-
-                // Firebase Auth 経由で現在のユーザー情報を取得
-                const auth = firebase.auth();
-                const user = auth.currentUser;
-                if (!auth.currentUser) {
-                    document.getElementById("signin-form").style.display = "block";
-                } else {
-
-                    const uid = user.uid;
-
-                    // コメントオブジェクトを作成
-                    const comment = {
-                        content: content,
-                        user_id: uid,
-                        timestamp: Date.now()
-                    };
-
-                    // Realtime Database に push！
-                    try {
-                        await firebase.database().ref("comments").push(comment);
-                        console.log("コメント送信完了", comment);
-                        document.getElementById("comment-input").value = "";
-                        addComment(comment);
-                        if (firebase.auth().currentUser?.isAnonymous) {
-                            document.getElementById("upgrade-prompt").style.display = "block";
-                        }
-                    } catch (err) {
-                        console.error("送信失敗", err);
-                        alert("コメントの送信に失敗しました…");
-                    }
-                }
-            })
+        window.addEventListener("DOMContentLoaded", () => {
+            loadComments();
         })
-    }
-    function addComment(comment) {
-        const commentsDiv = document.getElementById("comments");
-        const template = document.getElementById("comment-template");
-        const clone = template.content.cloneNode(true);
-        commentsDiv.prepend(clone);
-        const commentElement = commentsDiv.firstElementChild;
-        user_id = comment.user_id;
-        if (!userCache.has(user_id)) {
-            const fetching = db.ref("users/" + user_id + "/nickname").get().then(snap => {
-                const data = snap.val() || "名無しさん";
-                userCache.set(user_id, data); // 取得完了後に実体を保存
-                return data;
-            });
-            userCache.set(user_id, fetching);
+        const userCache = new Map(); // uid → ユーザーデータ or Pending Promise
+
+        //コメントの取得
+        function loadComments() {
+            const commentsDiv = document.getElementById("comments");
+            const commentsRef = firebase.database().ref('comments');
+            commentsRef.get().then(commentsSnapshot => {
+                comments = commentsSnapshot.val() || [];
+                commentsDiv.innerHTML = "";
+                Object.values(comments).forEach(e => {
+                    console.log(e);
+                    addComment(e);
+                });
+                const template = document.getElementById("commentinput-template");
+                const clone = template.content.cloneNode(true);
+                document.getElementById("comment-in").prepend(clone);
+                document.getElementById("submit-comment").addEventListener("click", async () => {
+                    const content = document.getElementById("comment-input").value.trim();
+
+                    if (!content) {
+                        alert("コメントが空です！");
+                        return;
+                    }
+
+                    // Firebase Auth 経由で現在のユーザー情報を取得
+                    const auth = firebase.auth();
+                    const user = auth.currentUser;
+                    if (!auth.currentUser) {
+                        document.getElementById("signin-form").style.display = "block";
+                    } else {
+
+                        const uid = user.uid;
+
+                        // コメントオブジェクトを作成
+                        const comment = {
+                            content: content,
+                            user_id: uid,
+                            timestamp: Date.now()
+                        };
+
+                        // Realtime Database に push！
+                        try {
+                            await firebase.database().ref("comments").push(comment);
+                            console.log("コメント送信完了", comment);
+                            document.getElementById("comment-input").value = "";
+                            addComment(comment);
+                            if (firebase.auth().currentUser?.isAnonymous) {
+                                document.getElementById("upgrade-prompt").style.display = "block";
+                            }
+                        } catch (err) {
+                            console.error("送信失敗", err);
+                            alert("コメントの送信に失敗しました…");
+                        }
+                    }
+                })
+            })
         }
-        const cached = userCache.get(user_id);
-        return (cached instanceof Promise ? cached : Promise.resolve(cached))
-            .then(nickname => {
-                console.log("コメント追加");
-                console.log(commentElement);
-                commentElement.querySelector(".comment-user").textContent = nickname;
-                commentElement.querySelector(".comment-time").textContent = formatTimestamp(comment.timestamp);
-                commentElement.querySelector(".comment-body").textContent = comment.content;
-            })
-    }
+        function addComment(comment) {
+            const commentsDiv = document.getElementById("comments");
+            const template = document.getElementById("comment-template");
+            const clone = template.content.cloneNode(true);
+            commentsDiv.prepend(clone);
+            const commentElement = commentsDiv.firstElementChild;
+            user_id = comment.user_id;
+            if (!userCache.has(user_id)) {
+                const fetching = db.ref("users/" + user_id + "/nickname").get().then(snap => {
+                    const data = snap.val() || "名無しさん";
+                    userCache.set(user_id, data); // 取得完了後に実体を保存
+                    return data;
+                });
+                userCache.set(user_id, fetching);
+            }
+            const cached = userCache.get(user_id);
+            return (cached instanceof Promise ? cached : Promise.resolve(cached))
+                .then(nickname => {
+                    console.log("コメント追加");
+                    console.log(commentElement);
+                    commentElement.querySelector(".comment-user").textContent = nickname;
+                    commentElement.querySelector(".comment-time").textContent = formatTimestamp(comment.timestamp);
+                    commentElement.querySelector(".comment-body").textContent = comment.content;
+                })
+        }
 
-    function formatTimestamp(timestamp) {
-        const date = new Date(timestamp);
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp);
 
-        // 日本時間の文字列に変換
-        const jstString = date.toLocaleString("ja-JP", {
-            timeZone: "Asia/Tokyo"
-        });
-        return jstString;
-    }
-    function tokumeiSignup() {
-        auth.signInAnonymously()
-            .then(() => {
-                console.log("匿名でログイン完了：", auth.currentUser.uid);
-                document.getElementById("signin-form").style.display = "none";
-                // ここで投稿などの処理を続けられます
-            })
-            .catch(error => {
-                console.error("匿名ログインに失敗しました：", error);
+            // 日本時間の文字列に変換
+            const jstString = date.toLocaleString("ja-JP", {
+                timeZone: "Asia/Tokyo"
             });
-    }
-    function upgrade() {
-        const email = document.getElementById("upgrade-email").value.trim();
-        const password = document.getElementById("upgrade-password").value.trim();
-        const nickname = document.getElementById("upgrade-nickname").value.trim();
-
-        if (email && password && nickname) {
-            const credential = firebase.auth.EmailAuthProvider.credential(email, password);
-
-            auth.currentUser.linkWithCredential(credential)
-                .then(usercred => {
-                    console.log("匿名→正規アカウントへ昇格成功", usercred.user.uid);
-                    const uid = usercred.user.uid;
-                    const timestamp = Date.now();
-
-                    db.ref("users/" + uid).set({
-                        nickname: nickname,
-                        timestamp: timestamp
-                    });
-
-                    alert("あなたの名前が保存されました！");
-
-                    // 表示要素を非表示にする（仮に upgrade-prompt というidとする場合）
-                    const prompt = document.getElementById("upgrade-prompt");
-                    if (prompt) prompt.style.display = "none";
+            return jstString;
+        }
+        function tokumeiSignup() {
+            auth.signInAnonymously()
+                .then(() => {
+                    console.log("匿名でログイン完了：", auth.currentUser.uid);
+                    document.getElementById("signin-form").style.display = "none";
+                    // ここで投稿などの処理を続けられます
                 })
                 .catch(error => {
-                    alert("サインインに失敗しました：" + error.message);
+                    console.error("匿名ログインに失敗しました：", error);
                 });
         }
-    }
-    function signin() {
-  const email = document.getElementById("signin-email").value.trim();
-  const password = document.getElementById("signin-password").value.trim();
+        function upgrade() {
+            const email = document.getElementById("upgrade-email").value.trim();
+            const password = document.getElementById("upgrade-password").value.trim();
+            const nickname = document.getElementById("upgrade-nickname").value.trim();
 
-  if (email && password) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(result => {
-        console.log("サインイン成功", result.user.uid);
-        alert("サインインできました");
-        // 必要なら UI 更新や投稿欄の復元など
-      })
-      .catch(err => {
-        console.error("サインイン失敗", err);
-        alert("サインインに失敗しました：" + err.message);
-      });
-  }
-}
+            if (email && password && nickname) {
+                const credential = firebase.auth.EmailAuthProvider.credential(email, password);
+
+                auth.currentUser.linkWithCredential(credential)
+                    .then(usercred => {
+                        console.log("匿名→正規アカウントへ昇格成功", usercred.user.uid);
+                        const uid = usercred.user.uid;
+                        const timestamp = Date.now();
+
+                        db.ref("users/" + uid).set({
+                            nickname: nickname,
+                            timestamp: timestamp
+                        });
+
+                        alert("あなたの名前が保存されました！");
+
+                        // 表示要素を非表示にする（仮に upgrade-prompt というidとする場合）
+                        const prompt = document.getElementById("upgrade-prompt");
+                        if (prompt) prompt.style.display = "none";
+                    })
+                    .catch(error => {
+                        alert("サインインに失敗しました：" + error.message);
+                    });
+            }
+        }
+        function signin() {
+            const email = document.getElementById("signin-email").value.trim();
+            const password = document.getElementById("signin-password").value.trim();
+
+            if (email && password) {
+                firebase.auth().signInWithEmailAndPassword(email, password)
+                    .then(result => {
+                        console.log("サインイン成功", result.user.uid);
+                        alert("サインインできました");
+                        // 必要なら UI 更新や投稿欄の復元など
+                    })
+                    .catch(err => {
+                        console.error("サインイン失敗", err);
+                        alert("サインインに失敗しました：" + err.message);
+                    });
+            }
+        }
 
 
-</script>
+    </script>
+
+</body>
+
+</html>
